@@ -6,16 +6,16 @@ import os
 import schedule
 import time
 
-DB_SERVER=os.getenv("HOST", 'cloud.rznet.com.br')
-DB_PORT=os.getenv("PORT", '3369')
-DB_NAMES = os.getenv("DB", 'solcontroldb_dev')
+DB_SERVER=os.getenv("HOST", 'localhost')
+DB_PORT=os.getenv("PORT", '3306')
+DB_NAMES = os.getenv("DB", 'my_database')
 DB_USER=os.getenv("DB_USER", 'root')
-DB_PASS=os.getenv("DB_PASS", '@@#123SqL')
+DB_PASS=os.getenv("DB_PASS", 'my_password')
 HORA_BKP = os.getenv("HORA_BKP", "00:00")
 DB_DUMP_TARGET = os.getenv("DST_BKP", "/tmp")
 
 # if using one database... ('database1',)
-databases=['solcontroldb_dev']
+
 
 def get_dump(database):
     filestamp = time.strftime('%Y-%m-%d-%I')
