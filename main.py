@@ -13,7 +13,7 @@ DB_USER=os.getenv("DB_USER", 'root')
 DB_PASS=os.getenv("DB_PASS", 'my_password')
 HORA_BKP = os.getenv("HORA_BKP", "00:00")
 DB_DUMP_TARGET = os.getenv("DB_DUMP_TARGET", "/tmp")
-RUN_ONCE=os.getenv("RUN_ONCE", 'false')
+RUN_ONCE=os.getenv("RUN_ONCE", 'true')
 # if using one database... ('database1',)
 
 
@@ -21,9 +21,9 @@ def get_dump(database):
     filestamp = time.strftime('%Y-%m-%d_%I-%M-%S')
     # D:/xampp/mysql/bin/mysqldump for xamp windows
     fileFullName = DB_DUMP_TARGET + '/' +database+"_"+filestamp+".sql"
-    os.popen("mysqldump -h %s -P %s -u %s -p%s %s > %s" % (DB_SERVER,DB_PORT,DB_USER,DB_PASS,database,fileFullName))
-    
-    print("\n|| Database dumped to "+fileFullName+".sql || ")
+    os.popen("mysqldump -h %s -P %s -u %s -p%s %s > %s" % (DB_SERVER,DB_PORT,DB_USER,DB_PASS,database,fileFullName)).read()
+    os.popen("gzip %s" % (fileFullName)).read()
+    print("\n|| Database dumped to "+fileFullName+".gz ||")
 
 
 def rodar():
