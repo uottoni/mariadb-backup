@@ -1,10 +1,9 @@
-import configparser
 import os
 import time
-import getpass
 import os
 import schedule
 import time
+import subprocess
 
 DB_SERVER=os.getenv("DB_SERVER", 'localhost')
 DB_PORT=os.getenv("DB_PORT", '3306')
@@ -21,7 +20,10 @@ def get_dump(database):
     filestamp = time.strftime('%Y-%m-%d_%I-%M-%S')
     # D:/xampp/mysql/bin/mysqldump for xamp windows
     fileFullName = DB_DUMP_TARGET + '/' +database+"_"+filestamp+".sql"
-    os.popen("mysqldump -h %s -P %s -u %s -p%s %s > %s" % (DB_SERVER,DB_PORT,DB_USER,DB_PASS,database,fileFullName)).read()
+    cmd = "mysqldump -h %s -P %s -u %s -p%s %s > %s" % (DB_SERVER,DB_PORT,DB_USER,DB_PASS,database,fileFullName)
+    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
+    (output, err) = p.communicate()
+    p_status = p.wait()
     os.popen("gzip %s" % (fileFullName)).read()
     print("\n|| Database dumped to "+fileFullName+".gz ||")
 
