@@ -20,7 +20,7 @@ def get_dump(database):
     filestamp = time.strftime('%Y-%m-%d_%I-%M-%S')
     # D:/xampp/mysql/bin/mysqldump for xamp windows
     fileFullName = DB_DUMP_TARGET + '/' +database+"_"+filestamp+".sql"
-    cmd = "mysqldump --add-drop-table -h %s -P %s -u %s -p%s %s > %s" % (DB_SERVER,DB_PORT,DB_USER,DB_PASS,database,fileFullName)
+    cmd = "mysqldump --add-drop-database -h %s -P %s -u %s -p%s %s > %s" % (DB_SERVER,DB_PORT,DB_USER,DB_PASS,database,fileFullName)
     p = subprocess.Popen(cmd, stdout=subprocess.PIPE, shell=True)
     (output, err) = p.communicate()
     p_status = p.wait()
